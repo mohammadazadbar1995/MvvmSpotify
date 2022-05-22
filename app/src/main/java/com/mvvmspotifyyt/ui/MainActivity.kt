@@ -1,8 +1,9 @@
-package com.mvvmspotifyyt
+package com.mvvmspotifyyt.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.RequestManager
+import com.mvvmspotifyyt.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
