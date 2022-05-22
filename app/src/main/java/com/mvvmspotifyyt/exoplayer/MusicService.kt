@@ -19,6 +19,7 @@ import com.mvvmspotifyyt.exoplayer.callback.MusicPlaybackPreparer
 import com.mvvmspotifyyt.exoplayer.callback.MusicPlayerEventListener
 import com.mvvmspotifyyt.exoplayer.callback.MusicPlayerNotificationListener
 import com.mvvmspotifyyt.other.Constants.MEDIA_ROOT_ID
+import com.mvvmspotifyyt.other.Constants.NETWORK_ERROR
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -55,10 +56,11 @@ class MusicService : MediaBrowserServiceCompat() {
     private lateinit var musicPlayerEventListener: MusicPlayerEventListener
 
 
-    companion object{
+    companion object {
         var curSongDuration = 0L
-        private set
+            private set
     }
+
     override fun onCreate() {
         super.onCreate()
         serviceScope.launch {
@@ -162,6 +164,7 @@ class MusicService : MediaBrowserServiceCompat() {
                             isForegroundService = true
                         }
                     } else {
+                        mediaSession.sendSessionEvent(NETWORK_ERROR, null)
                         result.sendResult(null)
                     }
                 }
