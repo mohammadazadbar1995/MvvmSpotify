@@ -1,5 +1,7 @@
 package com.mvvmspotifyyt.exoplayer
 
+import android.media.session.PlaybackState.STATE_PLAYING
+import android.os.SystemClock
 import android.support.v4.media.session.PlaybackStateCompat
 
 inline val PlaybackStateCompat.isPrepared
@@ -17,3 +19,8 @@ inline val PlaybackStateCompat.isPlayEnabled
             (actions and PlaybackStateCompat.ACTION_PLAY_PAUSE != 0L &&
                     state == PlaybackStateCompat.STATE_PAUSED)
 
+inline val PlaybackStateCompat.currentPlaybackPosition: Long
+    get() = if (state == STATE_PLAYING) {
+        val timeDelta = SystemClock.elapsedRealtime() - lastPositionUpdateTime
+        (position + (timeDelta * playbackSpeed)).toLong()
+    } else position
